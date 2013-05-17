@@ -18,6 +18,8 @@
 
 @property (nonatomic) PlayingCardDeck *deck;
 
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+
 @end
 
 @implementation CardGameViewController
