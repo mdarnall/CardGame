@@ -24,11 +24,16 @@
 
 @implementation CardGameViewController
 
+-(PlayingCardDeck*)deck
+{
+    if(!_deck) _deck = [[PlayingCardDeck alloc]init];
+    return _deck;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.deck = [[PlayingCardDeck alloc]init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,17 +46,21 @@
 {
     _clickCount = clickCount;
     self.clickLabel.text = [NSString stringWithFormat:@"Flips: %d", self.clickCount];
+}
+
+-(void) setCardButtons:(NSArray *)cardButtons
+{
+    _cardButtons = cardButtons;
+    for (id button in cardButtons) {
+        Card *card = [self.deck drawRandomCard];
+        [button setTitle:card.contents forState:UIControlStateSelected];
+    }
     
 }
 
 - (IBAction)flipCard:(UIButton *)sender forEvent:(UIEvent *)event
 {
-    
-    Card *card = [self.deck drawRandomCard];
-    [sender setTitle:card.contents forState:UIControlStateSelected];
-
     sender.selected = !sender.selected;
-    
     self.clickCount++;
     
 }
